@@ -6,7 +6,7 @@ public class HomeWorkApp {
         proverkachisla(-2);
         System.out.println(proverkachislaboolean(-5));
         printstroki("Печать ", 10);
-        System.out.println("");
+        System.out.println(" ");
         System.out.println(opredvisokgoda(2022));
     }
 
