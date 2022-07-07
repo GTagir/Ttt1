@@ -1,9 +1,11 @@
 package lesson3;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class HomeWorkApp {
     static final int ARRAY_SIZE = 7;
+    static Scanner in = new Scanner(System.in);
     public static void main(String[] args) {
     createArr();
     createArr100();
@@ -11,7 +13,8 @@ public class HomeWorkApp {
     createTwoBitArr();
     System.out.println(Arrays.toString(crearArrTwoArgument(5,7)));
     createArrMinMaxElement();
-    summArrGran();
+    System.out.println(summArrGran());
+    moveElementArr();
     }
 
     private static void createArr() {
@@ -79,16 +82,49 @@ public class HomeWorkApp {
         System.out.println("Минимальное значение массива" + min);
     }
 
-    private static void summArrGran() {
-        int [] arr ={2, 2, 2, 1, 2, 2, 10, 1};
-        int sum=0, sumlev=arr[0], sumprav=arr[arr.length-1];
+    private static boolean summArrGran() {
+        int [] arr ={2, 2, 2, 1, 2, 2, 10, 1, 1};
+        int sum=0, sumlev=0, sumprav=0, indlev=0, indprav = arr.length - 1;
         for (int i = 0; i < arr.length; i++) {
-            sum =sum + arr[i];
+            sum = sum + arr[i];
         }
-        if (arr[0]< arr[arr.length-1]){
-            sumlev = arr[0] + arr[1];
-        }else{sumprav = arr[arr.length-1]+arr[arr.length-2];}
-        System.out.println("Сум лев " + sumlev);
-        System.out.println("Сум прав " + sumprav);
+
+        while (true){
+        if (sumlev<=sumprav){sumlev = sumlev + arr[indlev]; indlev++;}
+        else {sumprav = sumprav + arr[indprav]; indprav--;}
+        if (sumlev + sumprav >= sum) {break;}
+         }
+return (sumlev == sumprav);
+    }
+
+
+    private static void moveElementArr() {
+        int[] arr = {3, 1, 2, 4, 5};
+        int a = getIntNumFromScanner();
+        if (a>0){int b = arr[0];
+        for (int j = 0; j < a-1; j++) {
+            for (int i = 0; i < arr.length - 1; i++) {
+                arr[i] = arr[i + 1];}
+            arr[arr.length - 1] = b;
+            System.out.println(Arrays.toString(arr));
+            b = arr[0];}
+        }else{int b = arr[arr.length-1];
+            for (int j = 0; j < Math.abs(a)-1; j++) {
+                for (int i = 0; i < arr.length - 1; i++) {
+                    arr[arr.length-i-1] = arr[arr.length-i - 2];}
+                arr[0] = b;
+                System.out.println(Arrays.toString(arr));
+                b = arr[arr.length-1];
+            }
+        }
+    }
+    private static int getIntNumFromScanner() {
+        while (true) {
+            System.out.println("Введите целое число на которое будет сдвигаться массив: ");
+            if (in.hasNextInt()) {
+                return in.nextInt();
+            }
+            System.out.println(in.next() + " - это не число");
+        }
     }
 }
