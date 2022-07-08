@@ -102,21 +102,20 @@ return (sumlev == sumprav);
         int[] arr = {3, 1, 2, 4, 5};
         int a = getIntNumFromScanner();
         if (a>0){int b = arr[0];
-        for (int j = 0; j < a-1; j++) {
+        for (int j = 0; j < a; j++) {
             for (int i = 0; i < arr.length - 1; i++) {
                 arr[i] = arr[i + 1];}
             arr[arr.length - 1] = b;
-            System.out.println(Arrays.toString(arr));
             b = arr[0];}
         }else{int b = arr[arr.length-1];
-            for (int j = 0; j < Math.abs(a)-1; j++) {
+            for (int j = 0; j < Math.abs(a); j++) {
                 for (int i = 0; i < arr.length - 1; i++) {
                     arr[arr.length-i-1] = arr[arr.length-i - 2];}
                 arr[0] = b;
-                System.out.println(Arrays.toString(arr));
                 b = arr[arr.length-1];
             }
         }
+        System.out.println(Arrays.toString(arr));
     }
     private static int getIntNumFromScanner() {
         while (true) {
