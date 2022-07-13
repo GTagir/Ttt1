@@ -35,14 +35,14 @@ public class HomeWorkApp {
             sizeWin = 5;
             System.out.println("Победная серия 5");}
 
-            do {
-                System.out.println("\nИгра начинается!!!");
-                init();
-                printMap();
-                playGame();
-            } while (isContinueGame());
-            endGame();
-        }
+        do {
+            System.out.println("\nИгра начинается!!!");
+            init();
+            printMap();
+            playGame();
+        } while (isContinueGame());
+        endGame();
+    }
 
     private static void enteringSettings() {
         while (true) {
@@ -88,106 +88,106 @@ public class HomeWorkApp {
     }
 
     private static void init() {
-            turnsCount = 0;
-            initMap();
-        }
+        turnsCount = 0;
+        initMap();
+    }
 
-        private static void initMap() {
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
-                    MAP[i][j] = DOT_EMPTY;
-                }
+    private static void initMap() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                MAP[i][j] = DOT_EMPTY;
             }
         }
+    }
 
-        private static void printMap() {
-            printMapHeader();
-            printMapBody();
+    private static void printMap() {
+        printMapHeader();
+        printMapBody();
+    }
+
+    private static void printMapHeader() {
+        System.out.print(HEADER_FIRST_SYMBOL + SPACE_MAP);
+        for (int i = 0; i < size; i++) {
+            printMapNumber(i);
         }
+        System.out.println();
+    }
 
-        private static void printMapHeader() {
-            System.out.print(HEADER_FIRST_SYMBOL + SPACE_MAP);
-            for (int i = 0; i < size; i++) {
-                printMapNumber(i);
+    private static void printMapNumber(int i) {
+        System.out.print(i + 1 + SPACE_MAP);
+    }
+
+    private static void printMapBody() {
+        for (int i = 0; i < size; i++) {
+            printMapNumber(i);
+            for (int j = 0; j < size; j++) {
+                System.out.print(MAP[i][j] + SPACE_MAP);
             }
             System.out.println();
         }
+    }
 
-        private static void printMapNumber(int i) {
-            System.out.print(i + 1 + SPACE_MAP);
-        }
-
-        private static void printMapBody() {
-            for (int i = 0; i < size; i++) {
-                printMapNumber(i);
-                for (int j = 0; j < size; j++) {
-                    System.out.print(MAP[i][j] + SPACE_MAP);
-                }
-                System.out.println();
-            }
-        }
-
-        private static void playGame() {
-            while (true) {
-                humanTurn();
-                printMap();
-                if (checkEnd(DOT_HUMAN)) {
-                    break;
-                }
-
-                aiTurn();
-                printMap();
-                if (checkEnd(DOT_AI)) {
-                    break;
-                }
-            }
-        }
-
-        private static void humanTurn() {
-            System.out.println("\nХОД ЧЕЛОВЕКА!");
-
-            while (true) {
-                System.out.print("Введите координату строки: ");
-                rowNumber = getValidNumberFromScanner() - 1;
-
-                System.out.print("Введите координату столбика: ");
-                columnNumber = getValidNumberFromScanner()  - 1;
-
-                if (isCellFree(rowNumber, columnNumber)) {
-                    break;
-                }
-
-                System.out.printf("ОШИБКА! Ячейка с координатами %s:%s уже используется%n%n", rowNumber + 1,
-                        columnNumber + 1);
+    private static void playGame() {
+        while (true) {
+            humanTurn();
+            printMap();
+            if (checkEnd(DOT_HUMAN)) {
+                break;
             }
 
-            MAP[rowNumber][columnNumber] = DOT_HUMAN;
-            turnsCount++;
-        }
-
-        private static boolean isCellFree(int rowNumber, int columnNumber) {
-            return MAP[rowNumber][columnNumber] == DOT_EMPTY;
-        }
-
-        private static boolean isNumberValid(int n) {
-            return n >= 1 && n <= size;
-        }
-
-        private static boolean checkEnd(char symbol) {
-            if (checkHorizontWin(symbol) || checkVertikalWin(symbol) || checkDiagonal1(symbol) || checkDiagonal2(symbol)) {
-                if (symbol == DOT_HUMAN) {
-                    System.out.println("УРА ВЫ ПОБЕДИЛИ!");
-                } else {
-                    System.out.println("Восстание близко... ИИ победил...");
-                }
-                return true;
+            aiTurn();
+            printMap();
+            if (checkEnd(DOT_AI)) {
+                break;
             }
-            if (checkDraw()) {
-                System.out.println("Ничья!");
-                return true;
-            }
-            return false;
         }
+    }
+
+    private static void humanTurn() {
+        System.out.println("\nХОД ЧЕЛОВЕКА!");
+
+        while (true) {
+            System.out.print("Введите координату строки: ");
+            rowNumber = getValidNumberFromScanner() - 1;
+
+            System.out.print("Введите координату столбика: ");
+            columnNumber = getValidNumberFromScanner()  - 1;
+
+            if (isCellFree(rowNumber, columnNumber)) {
+                break;
+            }
+
+            System.out.printf("ОШИБКА! Ячейка с координатами %s:%s уже используется%n%n", rowNumber + 1,
+                    columnNumber + 1);
+        }
+
+        MAP[rowNumber][columnNumber] = DOT_HUMAN;
+        turnsCount++;
+    }
+
+    private static boolean isCellFree(int rowNumber, int columnNumber) {
+        return MAP[rowNumber][columnNumber] == DOT_EMPTY;
+    }
+
+    private static boolean isNumberValid(int n) {
+        return n >= 1 && n <= size;
+    }
+
+    private static boolean checkEnd(char symbol) {
+        if (checkHorizontWin(symbol) || checkVertikalWin(symbol) || checkDiagonal1(symbol) || checkDiagonal2(symbol)) {
+            if (symbol == DOT_HUMAN) {
+                System.out.println("УРА ВЫ ПОБЕДИЛИ!");
+            } else {
+                System.out.println("Восстание близко... ИИ победил...");
+            }
+            return true;
+        }
+        if (checkDraw()) {
+            System.out.println("Ничья!");
+            return true;
+        }
+        return false;
+    }
 
     private static boolean checkHorizontWin(char symbol) {
         int n = 0;
@@ -224,10 +224,10 @@ public class HomeWorkApp {
         for (int i = 0; i < MAP.length; i++) {
             for (int j = 0; j < MAP.length; j++) {
                 if (b == i + j) {
-                     if (MAP[i][j] == symbol){
-                         n ++;
-                     }
-                     else n = 0;
+                    if (MAP[i][j] == symbol){
+                        n ++;
+                    }
+                    else n = 0;
                 }
                 if (n == sizeWin){
                     return true;
@@ -239,13 +239,10 @@ public class HomeWorkApp {
 
     private static boolean checkDiagonal2(char symbol) {
         int a = 0;
-        int b = rowNumber;
-        int c = columnNumber;
-
         do {
-            if (b != 0 && c != 0) {
-                b--;
-                c--;
+            if (rowNumber != 0 && columnNumber != 0) {
+                rowNumber--;
+                columnNumber--;
             }
             else break;
         }
@@ -253,12 +250,12 @@ public class HomeWorkApp {
 
         for (int i = 0; i < MAP.length; i++) {
             for (int j = 0; j < MAP.length; j++) {
-                if (i == b && j == c) {
-                    if (MAP[b][c] == symbol){
-                    a++; c++; b++;
+                if (i == rowNumber && j == columnNumber) {
+                    if (MAP[rowNumber][columnNumber] == symbol) {
+                        a++; columnNumber++; rowNumber++;
                     }
                     else {
-                        a = 0; c++; b++;
+                        a = 0; columnNumber++; rowNumber++;
                     }
                     if (a == sizeWin){
                         return true;
@@ -268,32 +265,32 @@ public class HomeWorkApp {
         }
         return false;
     }
-        private static boolean checkDraw() {
-            return turnsCount >= size * size;
-        }
+    private static boolean checkDraw() {
+        return turnsCount >= size * size;
+    }
 
-        private static void aiTurn() {
-            System.out.println("\nХОД КОМПУКТЕРА!");
-            do {
-                rowNumber = random.nextInt(size);
-                columnNumber = random.nextInt(size);
+    private static void aiTurn() {
+        System.out.println("\nХОД КОМПУКТЕРА!");
+        do {
+            rowNumber = random.nextInt(size);
+            columnNumber = random.nextInt(size);
 
-            } while (!isCellFree(rowNumber, columnNumber));
+        } while (!isCellFree(rowNumber, columnNumber));
 
-            MAP[rowNumber][columnNumber] = DOT_AI;
-            turnsCount++;
-        }
+        MAP[rowNumber][columnNumber] = DOT_AI;
+        turnsCount++;
+    }
 
-        private static boolean isContinueGame() {
-            System.out.println("Хотите продолжить? y\\n");
-            return switch (in.next()){
-                case "y", "yes", "д", "да", "+" -> true;
-                default -> false;
-            };
-        }
+    private static boolean isContinueGame() {
+        System.out.println("Хотите продолжить? y\\n");
+        return switch (in.next()){
+            case "y", "yes", "д", "да", "+" -> true;
+            default -> false;
+        };
+    }
 
-        private static void endGame() {
-            in.close();
-            System.out.println("Ты заходи, если что");
-        }
+    private static void endGame() {
+        in.close();
+        System.out.println("Ты заходи, если что");
+    }
 }
